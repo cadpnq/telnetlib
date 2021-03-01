@@ -1,0 +1,26 @@
+{
+  "name": "telnetlib",
+  "version": "0.0.0",
+  "description": "A stupid little Node.js telnet library.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -r chai/register-assert -R spec --recursive"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cadpnq/telnetlib.git"
+  },
+  "keywords": [
+    "telnet"
+  ],
+  "author": "Nicky Nickell <nicky.nickell@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cadpnq/telnetlib/issues"
+  },
+  "homepage": "https://github.com/cadpnq/telnetlib#readme",
+  "devDependencies": {
+    "chai": "^4.3.0",
+    "mocha": "^8.3.0"
+  }
+}
