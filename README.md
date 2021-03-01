@@ -39,7 +39,7 @@ const client = telnetlib.createConnection({
   * [SGA](https://tools.ietf.org/html/rfc858)
   * [NAWS](https://tools.ietf.org/html/rfc1073)
   * [GMCP](https://www.gammon.com.au/gmcp)
-  * [MCCP2](http://www.gammon.com.au/mccp/protocol.html) (partially implemented)
+  * [MCCP2](https://www.gammon.com.au/mccp/protocol.html) (partially implemented)
 
 ## Reference
 
