@@ -2,6 +2,8 @@
 A stupid little Node.js telnet library. It provides an interface similar to the standard net module (viz. `createServer` and `createConnection`) while abstracting option negotiation and providing handlers for some common options.
 
 ## Simple Example
+This example is a server that, once option negotiation finishes, says hello world to the client and then echos anything it receives back to the client. The client portion simply echos anything back to the server.
+
 ### Server
 ```js
 const telnetlib = require('telnetlib');
@@ -198,6 +200,7 @@ telnetlib.options.defineOption('Something', ourOptionCode, Something);
 ## Advanced Examples
 
 ### GMCP
+This is similar to the simple example above, but instead of sending normal text back and forth across the connection, the same thing is done with GMCP messages.
 
 #### Server
 ```js
@@ -235,6 +238,58 @@ const client = telnetlib.createConnection({
     gmcp.send('derp', data);
   });
 });
+```
+
+### Fancy Interfaces
+Using the [blessed](https://github.com/chjj/blessed) library this example renders a box with in the middle of the terminal. The box will resize to fit in clients that support NAWS.
+
+```js
+const blessed = require('blessed');
+const telnetlib = require('telnetlib');
+const { ECHO, TRANSMIT_BINARY, NAWS, SGA } = telnetlib.options;
+
+const server = telnetlib.createServer({
+    remoteOptions: [NAWS, TRANSMIT_BINARY, SGA],
+    localOptions: [ECHO, TRANSMIT_BINARY, SGA]
+  }, (c) => {
+    let screen;
+
+    c.on('negotiated', () => {
+      screen = blessed.screen({
+        smartCSR: true,
+        input: c,
+        output: c,
+        height: 80,
+        width: 24,
+        terminal: 'xterm',
+        fullUnicode: true,
+        cursor: {
+          artificial: true,
+          shape: 'line',
+          blink: true,
+          color: null 
+        }
+      });
+
+      const box = blessed.box({
+        parent: screen,
+        top: 'center',
+        left: 'center',
+        width: '50%',
+        height: '50%',
+        content: 'Hello World',
+        border: 'line'
+      });
+
+      screen.render();
+    });
+
+    c.on('end', () => {
+      if (screen) screen.destroy();
+    });
+});
+
+server.listen(9001);
 ```
 
 ## License
