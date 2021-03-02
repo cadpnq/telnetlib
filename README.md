@@ -233,7 +233,7 @@ const client = telnetlib.createConnection({
   const gmcp = client.getOption(GMCP);
   gmcp.on('gmcp/derp', (data) => {
     gmcp.send('derp', data);
-  })
+  });
 });
 ```
 
