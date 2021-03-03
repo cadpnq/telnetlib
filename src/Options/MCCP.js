@@ -18,8 +18,6 @@ class MCCP extends TelnetOption {
       this.socket.writer.writeSubnegotiation(this.code);
       this.socket.writer.unpipe(this.socket.socket);
       this.socket.writer.pipe(this.deflate).pipe(this.socket.socket);
-    } else if (at == where.REMOTE) {
-      
     }
   }
 
@@ -32,7 +30,6 @@ class MCCP extends TelnetOption {
   }
 
   subnegotiation(buffer) {
-    super.subnegotiation(buffer);
     if (this.him == optionState.YES && !this.inflating) {
       this.inflating = true;
       this.socket.socket.unpipe(this.socket.reader);
