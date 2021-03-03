@@ -17,7 +17,7 @@ class GMCP extends TelnetOption {
   }
 
   send(packageName, messageName, data) {
-    this.socket.writer.writeSubnegotiation(this.code, `${packageName.toLowerCase()}.${messageName.toLowerCase()} ${JSON.stringify(data)}`);
+    this.socket.writer.writeSubnegotiation(this.code, `${packageName.toLowerCase()}.${messageName.toLowerCase()} ${data !== undefined ? JSON.stringify(data) : ''}`);
   }
 }
 

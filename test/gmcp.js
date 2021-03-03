@@ -110,5 +110,9 @@ describe('GMCP', function() {
     it('should handle arrays', function() {
       testData = [1, 2, 3, 4];
     });
+
+    it('should handle messages with no data', function() {
+      testData = undefined;
+    })
   });
 });
