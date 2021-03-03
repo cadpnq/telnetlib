@@ -165,7 +165,7 @@ Emitted when a GMCP message is received.
 
 As above, but instead of having a `name` value it is included in the event name.
 
-#### `send(packageName, messageName, data)`
+#### `send(packageName, messageName[, data])`
  * `packageName` *String* the name of the package
  * `messageName` *String* the name of the message
  * `data` *String* | *Number* | *Boolean* | *Object* | *Array* The message data
