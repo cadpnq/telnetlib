@@ -6,7 +6,8 @@ class GMCP extends TelnetOption {
   }
 
   subnegotiation(buffer) {
-    let [, name, data] = buffer.toString().match(/([a-z_][\w-]*(?:\.[a-z_][\w_-]*)+)\s*(.*)?/i);
+    let [, name, data] = buffer.toString().match(/([a-z_][\w-_]*(?:\.[a-z_][\w-_]*)+)\s*(.*)?/i);
+
     name = name.toLowerCase();
     if (data) {
       data = JSON.parse(data);
