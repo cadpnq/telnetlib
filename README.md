@@ -165,8 +165,9 @@ Emitted when a GMCP message is received.
 
 As above, but instead of having a `name` value it is included in the event name.
 
-#### send(name, data)
- * `name` *String* the name of the message
+#### `send(packageName, messageName, data)`
+ * `packageName` *String* the name of the package
+ * `messageName` *String* the name of the message
  * `data` *String* | *Number* | *Boolean* | *Object* | *Array* The message data
 
 Send a GMCP message.
@@ -214,10 +215,10 @@ const server = telnetlib.createServer({
 }, (c) => {
   const gmcp = c.getOption(GMCP);
   c.on('negotiated', () => {
-    gmcp.send('derp', 42);
+    gmcp.send('herp', 'derp', 42);
   });
 
-  gmcp.on('gmcp/derp', (data) => {
+  gmcp.on('gmcp/herp.derp', (data) => {
     gmcp.send(derp, data);
   });
 });
@@ -236,8 +237,8 @@ const client = telnetlib.createConnection({
   remoteOptions: [GMCP]
 }, () => {
   const gmcp = client.getOption(GMCP);
-  gmcp.on('gmcp/derp', (data) => {
-    gmcp.send('derp', data);
+  gmcp.on('gmcp/herp.derp', (data) => {
+    gmcp.send('herp', 'derp', data);
   });
 });
 ```
