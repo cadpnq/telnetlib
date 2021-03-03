@@ -1,9 +1,9 @@
-const telnet = require('../index');
+const telnetlib = require('../index');
 
 describe('createServer, createConnection', function() {
   it('should create a server and client and pass data between them', function(done) {
     const testData = 'Hello World!\r\n';
-    const server = telnet.createServer({
+    const server = telnetlib.createServer({
       remoteOptions: [],
       localOptions: []
     }, (c) => {
@@ -14,7 +14,7 @@ describe('createServer, createConnection', function() {
   
     server.listen(9001);
 
-    const client = telnet.createConnection({
+    const client = telnetlib.createConnection({
       host: '127.0.0.1',
       port: 9001,
       remoteOptions: [],
