@@ -172,6 +172,16 @@ As above, but instead of having a `name` value it is included in the event name.
 
 Send a GMCP message.
 
+### Class: `MCCP`
+* Extends: `telnetlib.TelnetOption`
+
+This class handles MCCP2 compression.
+
+#### `endCompression([callback])`
+* `callback` *Function* optional callback
+
+Only valid when MCCP is enabled locally. Sends a `Z_FINISH` flush and forces MCCP off locally.
+
 ## Extending
 The main reason to extend this library would be to add additional option handlers. This can be easily done by subclassing `TelnetOption` and registering it with the library using `options.defineOption` before creating a server or client. As in:
 
