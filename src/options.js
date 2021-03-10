@@ -18,10 +18,10 @@ function defineOption(name, code, handler = TelnetOption) {
 
 defineOption('TRANSMIT_BINARY', 0);
 defineOption('ECHO', 1);
-defineOption('SGA', 3, require('./Options/sga'));
-defineOption('NAWS', 31, require('./Options/naws'));
-defineOption('MCCP', 86, require('./Options/mccp'));
-defineOption('GMCP', 201, require('./Options/gmcp'));
+defineOption('SGA', 3, require('./Options/SGA'));
+defineOption('NAWS', 31, require('./Options/NAWS'));
+defineOption('MCCP', 86, require('./Options/MCCP'));
+defineOption('GMCP', 201, require('./Options/GMCP'));
 
 exports.getOption = getOption;
 exports.defineOption = defineOption;
