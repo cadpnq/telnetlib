@@ -87,13 +87,13 @@ Emitted when all option negotiations have been settled either through (dis)agree
 
 #### Event: `enable`
  * `optionCode` *integer* telnet option code
- * `location` *String* value indicating where the option was enabled. Either `'LOCAL'` or `'REMOTE'`
+ * `at` *String* value indicating where the option was enabled. Either `'LOCAL'` or `'REMOTE'`
 
 Emitted when an option is enabled.
 
 #### Event: `disable`
  * `optionCode` *integer* telnet option code
- * `location` *String* value indicating where the option was disabled. Either `'LOCAL'` or `'REMOTE'`
+ * `at` *String* value indicating where the option was disabled. Either `'LOCAL'` or `'REMOTE'`
 
 Emitted when an option is disabled.
 
