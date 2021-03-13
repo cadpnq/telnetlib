@@ -35,9 +35,18 @@ describe('GMCP', function() {
     const dummyData = 42;
 
     afterEach('appropriate event should be raised', function(done) {
+      let bothDone = false;
       clientGMCP.once(`gmcp/${packageName.toLowerCase()}.${messageName.toLowerCase()}`, (data) => {
         assert.equal(data, dummyData);
-        done();
+        if (bothDone) done();
+        bothDone = true;
+      });
+      clientGMCP.once(`gmcp`, (_packageName, _messageName, data) => {
+        if (_packageName == packageName && _messageName == messageName) {
+          assert.equal(data, dummyData);
+          if (bothDone) done();
+          bothDone = true;
+        }
       });
       serverGMCP.send(packageName, messageName, dummyData);
     });

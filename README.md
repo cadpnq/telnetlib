@@ -155,7 +155,8 @@ Called when a subnegotiation is received for an option. Intended to be overridde
 This class handles sending and receiving GMCP message.
 
 #### Event: `gmcp`
- * `name` *String* the name of the message
+ * `packageName` *String* the name of the package the message belongs to
+ * `messageName` *String* the name of the message
  * `data` *String* | *Number* | *Boolean* | *Object* | *Array* The message data
 
 Emitted when a GMCP message is received.
@@ -163,7 +164,7 @@ Emitted when a GMCP message is received.
 #### Event: `gmcp/<name>`
  * `data` *String* | *Number* | *Boolean* | *Object* | *Array* The message data
 
-As above, but instead of having a `name` value it is included in the event name.
+As above, but instead of having `packageName` and `messageName` values they are included in the event name.
 
 #### `send(packageName, messageName[, data])`
  * `packageName` *String* the name of the package
