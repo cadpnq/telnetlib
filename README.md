@@ -230,7 +230,7 @@ const server = telnetlib.createServer({
   });
 
   gmcp.on('gmcp/herp.derp', (data) => {
-    gmcp.send(derp, data);
+    gmcp.send('herp', 'derp', data);
   });
 });
 
