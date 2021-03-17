@@ -159,7 +159,7 @@ This class handles sending and receiving GMCP message.
  * `messageName` *String* the name of the message
  * `data` *String* | *Number* | *Boolean* | *Object* | *Array* The message data
 
-Emitted when a GMCP message is received.
+Emitted when a GMCP message is received. `packageName` and `messageName` are normalized to lower case.
 
 #### Event: `gmcp/<name>`
  * `data` *String* | *Number* | *Boolean* | *Object* | *Array* The message data
