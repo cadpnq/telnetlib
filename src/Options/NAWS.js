@@ -1,7 +1,7 @@
 const TelnetOption = require('./TelnetOption');
 const { optionState, where } = require('../constants');
 
-class SGA extends TelnetOption {
+class NAWS extends TelnetOption {
   constructor(socket) {
     super(socket, 31);
   }
@@ -25,4 +25,4 @@ class SGA extends TelnetOption {
   }
 }
 
-module.exports = SGA;
+module.exports = NAWS;
