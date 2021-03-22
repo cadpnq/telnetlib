@@ -1,7 +1,7 @@
 {
   "name": "telnetlib",
   "version": "0.0.0",
-  "description": "A stupid little Node.js telnet library.",
+  "description": "A simple Node.js telnet server/client library.",
   "main": "index.js",
   "scripts": {
     "test": "mocha -r chai/register-assert -R spec --recursive",
