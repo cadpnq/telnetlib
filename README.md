@@ -1,8 +1,6 @@
 # telnetlib
 A simple Node.js telnet server/client library. It provides an interface similar to the standard net module (viz. `createServer` and `createConnection`) while abstracting option negotiation and providing handlers for some common options.
 
-**disclaimer:** This is a work in progress and is not yet fit for production use.
-
 ## Simple Example
 This example is a server that, once option negotiation finishes, says hello world to the client and then echos anything it receives back to the client. The client portion simply echos anything back to the server.
 
