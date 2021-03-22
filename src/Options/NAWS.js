@@ -1,4 +1,5 @@
 const TelnetOption = require('./TelnetOption');
+const { optionState, where } = require('../constants');
 
 class SGA extends TelnetOption {
   constructor(socket) {
@@ -12,6 +13,15 @@ class SGA extends TelnetOption {
     this.socket.rows = height;
     this.socket.emit('resize');
     this.emit('resize', {width, height});
+  }
+
+  sendResize(width = 80, height = 24) {
+    if (this.us != optionState.YES) return;
+
+    const buffer = Buffer.alloc(4);
+    buffer.writeInt16BE(width);
+    buffer.writeInt16BE(height, 2);
+    this.socket.writer.writeSubnegotiation(this.code, buffer);
   }
 }
 
