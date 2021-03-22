@@ -1,6 +1,6 @@
 {
   "name": "telnetlib",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A simple Node.js telnet server/client library.",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,6 @@
     "GMCP",
     "NAWS",
     "MCCP"
-
   ],
   "author": "Nicky Nickell <nicky.nickell@gmail.com>",
   "license": "MIT",
