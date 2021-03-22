@@ -1,7 +1,7 @@
 const zlib = require('zlib');
 const { Z_SYNC_FLUSH, Z_FINISH } = zlib.constants;
 const TelnetOption = require('./TelnetOption');
-const { optionState, where, reason } = require('../constants');
+const { optionState, where } = require('../constants');
 
 class MCCP extends TelnetOption {
   deflating = false;
