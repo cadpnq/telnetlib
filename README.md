@@ -69,6 +69,13 @@ Creates a new telnet server.
 
 A factory function which creates a `net.Socket`, wraps it in a `TelnetSocket`, initiates option negotiation, and returns the `TelnetSocket`.
 
+### `telnetlib.defineOption(name, code[, handler])`
+ * `name` *String* The name of the telnet option.
+ * `code` *number* The telnet option code
+ * `handler` *TelnetOption* Optional class that manages option
+
+Register an option handler with the library.
+
 ### Class: `telnetlib.TelnetSocket`
  * Extends: *Stream.Stream*
 
@@ -184,14 +191,14 @@ This class handles MCCP2 compression.
 Only valid when MCCP is enabled locally. Sends a `Z_FINISH` flush and forces MCCP off locally.
 
 ## Extending
-The main reason to extend this library would be to add additional option handlers. This can be easily done by subclassing `TelnetOption` and registering it with the library using `options.defineOption` before creating a server or client. As in:
+The main reason to extend this library would be to add additional option handlers. This can be easily done by subclassing `TelnetOption` and registering it with the library using `telnetlib.defineOption` before creating a server or client. As in:
 
 ```js
 const telnetlib = require('telnetlib');
 const { where } = telnetlib.constants;
 
 const ourOptionCode = 123;
-class Something extends telnetlib.options.TelnetOption {
+class Something extends telnetlib.TelnetOption {
   constructor(socket, code) {
     super(socket, ourOptionCode);
   }
@@ -208,7 +215,7 @@ class Something extends telnetlib.options.TelnetOption {
   }
 }
 
-telnetlib.options.defineOption('Something', ourOptionCode, Something);
+telnetlib.defineOption('Something', ourOptionCode, Something);
 ```
 
 ## Advanced Examples

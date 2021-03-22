@@ -1,6 +1,7 @@
 const net = require('net');
 const TelnetSocket = require('./TelnetSocket/TelnetSocket');
 const constants = require('./constants');
+const { defineOption, TelnetOption } = require('./options');
 
 function createServer(options, handler) {
   return net.createServer(options, (c) => {
@@ -25,5 +26,7 @@ function createConnection(options, handler) {
 
 exports.createServer = createServer;
 exports.createConnection = createConnection;
+exports.defineOption = defineOption;
+exports.TelnetOption = TelnetOption;
 exports.options = constants.options;
 exports.constants = constants;
