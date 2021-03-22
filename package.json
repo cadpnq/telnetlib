@@ -12,7 +12,12 @@
     "url": "git+https://github.com/cadpnq/telnetlib.git"
   },
   "keywords": [
-    "telnet"
+    "telnet",
+    "MUD",
+    "GMCP",
+    "NAWS",
+    "MCCP"
+
   ],
   "author": "Nicky Nickell <nicky.nickell@gmail.com>",
   "license": "MIT",
