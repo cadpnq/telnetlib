@@ -43,7 +43,7 @@ class MCCP extends TelnetOption {
     }
   }
 
-  _endCompression(callback = () => {}) {
+  _endCompression(callback) {
     if (this.us == optionState.YES && this.deflating == true) {
       this.socket.writer.cork();
       this.deflate.flush(Z_FINISH, () => {
