@@ -4,7 +4,8 @@
   "description": "A stupid little Node.js telnet library.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -r chai/register-assert -R spec --recursive"
+    "test": "mocha -r chai/register-assert -R spec --recursive",
+    "coverage": "nyc --reporter=text --reporter=html npm run test"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,7 @@
   "homepage": "https://github.com/cadpnq/telnetlib#readme",
   "devDependencies": {
     "chai": "^4.3.0",
-    "mocha": "^8.3.0"
+    "mocha": "^8.3.0",
+    "nyc": "^15.1.0"
   }
 }
