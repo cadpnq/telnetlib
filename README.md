@@ -60,7 +60,7 @@ Creates a new telnet server.
 ### `telnetlib.createConnection(options, handler)`
  * `options` *Object*
    * `host` *String* Host the socket should connect to
-   * `port` *number* Port the socket should connect to
+   * `port` *Integer* Port the socket should connect to
    * `remoteOptions` *Array* Option codes we want enabled remotely
    * `localOptions` *Array* Option codes we want enabled locally
    * `receiveBuffermax` *integer* How large the receive buffer is
@@ -71,7 +71,7 @@ A factory function which creates a `net.Socket`, wraps it in a `TelnetSocket`, i
 
 ### `telnetlib.defineOption(name, code[, handler])`
  * `name` *String* The name of the telnet option.
- * `code` *number* The telnet option code
+ * `code` *Integer* The telnet option code
  * `handler` *TelnetOption* Optional class that manages option
 
 Register an option handler with the library.
