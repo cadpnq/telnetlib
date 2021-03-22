@@ -190,6 +190,24 @@ This class handles MCCP2 compression.
 
 Only valid when MCCP is enabled locally. Sends a `Z_FINISH` flush and forces MCCP off locally.
 
+### Class: `NAWS`
+* Extends: `telnetlib.TelnetOption`
+
+This class handles sending and receiving window resize events.
+
+#### Event: `resize`
+ * `data` *Object*
+   * `width` *Integer* The width reported by the client.
+   * `height` *Integer* The height reported by the client.
+
+Event emitted when a resize subnegotiation is received.
+
+#### `sendResize([width[, height]])`
+ * `width` *Integer* The width to send. **Default:** 80
+ * `height` *Integer* The height to send. **Default:** 24
+
+Send a resize subnegotiation.
+
 ## Extending
 The main reason to extend this library would be to add additional option handlers. This can be easily done by subclassing `TelnetOption` and registering it with the library using `telnetlib.defineOption` before creating a server or client. As in:
 
