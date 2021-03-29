@@ -50,14 +50,18 @@ class TelnetReader extends Transform {
 
   _pushData(data) {
     if (this.#data.length > this.receiveBufferMax) {
-      // throw an error, yo
+      this.emit('error', new Error('Receive buffer overflow'));
+      this.socket.end();
+      return true;
     }
     this.#data.push(data);
   }
 
   _pushSubnegotiationData(data) {
     if (this.#subnegotiation.length > this.subnegotiationBufferMax) {
-      // throw an error, yo
+      this.emit('error', new Error('Subnegotiation buffer overflow'));
+      this.socket.end();
+      return true;
     }
     this.#subnegotiation.push(data);
   }
@@ -69,7 +73,7 @@ class TelnetReader extends Transform {
           if (byte == commands.IAC) {
             this.#state = state.IAC;
           } else {
-            this._pushData(byte);
+            if (this._pushData(byte)) return;
             this._maybeFlush(reason.DATA);
           }
           break;
@@ -92,7 +96,7 @@ class TelnetReader extends Transform {
               break;
             case commands.IAC:
               this.#state = state.DATA;
-              this._pushData(byte);
+              if (this._pushData(byte)) return;
               this._maybeFlush(reason.DATA);
               break;
             case commands.GA:
@@ -127,14 +131,14 @@ class TelnetReader extends Transform {
           if (byte == commands.IAC) {
             this.#state = state.SBIAC;
           } else {
-            this._pushSubnegotiationData(byte);
+            if (this._pushSubnegotiationData(byte)) return;
           }
           break;
         case state.SBIAC:
           switch (byte) {
             case commands.IAC:
               this.#state = state.SB;
-              this._pushSubnegotiationData(commands.IAC);
+              if (this._pushSubnegotiationData(commands.IAC)) return;
               break;
             case commands.SE:
               if (this.#subnegotiation.length > 0) {
