@@ -1,4 +1,3 @@
-const { assert } = require('chai');
 const telnetlib = require('../index');
 const { optionState } = telnetlib.constants;
 
