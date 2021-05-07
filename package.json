@@ -4,8 +4,8 @@
   "description": "A simple Node.js telnet server/client library.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -r chai/register-assert -R spec --recursive",
-    "coverage": "nyc --reporter=text --reporter=html npm run test"
+    "test": "mocha",
+    "coverage": "nyc npm run test"
   },
   "repository": {
     "type": "git",
