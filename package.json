@@ -7,6 +7,12 @@
     "test": "mocha",
     "coverage": "nyc npm run test"
   },
+  "files": [
+    "src/",
+    "test/",
+    ".mocharc.yml",
+    ".nycrc.yml"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/cadpnq/telnetlib.git"
