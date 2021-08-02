@@ -1,4 +1,4 @@
-const telnetlib = require('../index');
+const telnetlib = require('../src/telnetlib');
 const { GMCP } = telnetlib.options;
 
 describe('GMCP', function () {

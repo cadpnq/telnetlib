@@ -1,4 +1,4 @@
-const telnetlib = require('../index');
+const telnetlib = require('../src/telnetlib');
 const { NAWS } = telnetlib.options;
 
 describe('NAWS', function () {

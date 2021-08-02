@@ -1,4 +1,4 @@
-const telnetlib = require('../index');
+const telnetlib = require('../src/telnetlib');
 
 describe('createServer, createConnection', function () {
   it('should create a server and client and pass data between them', function (done) {

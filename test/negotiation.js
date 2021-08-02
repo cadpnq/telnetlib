@@ -1,4 +1,4 @@
-const telnetlib = require('../index');
+const telnetlib = require('../src/telnetlib');
 const { optionState } = telnetlib.constants;
 
 telnetlib.defineOption('TESTOP', 69);
