@@ -4,14 +4,14 @@
   "description": "A simple Node.js telnet server/client library.",
   "main": "src/telnetlib.js",
   "scripts": {
-    "test": "mocha",
-    "coverage": "nyc npm run test"
+    "coverage": "nyc mocha",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "prepare": "husky install",
+    "test": "mocha"
   },
   "files": [
-    "src/",
-    "test/",
-    ".mocharc.yml",
-    ".nycrc.yml"
+    "src/"
   ],
   "repository": {
     "type": "git",
@@ -31,8 +31,17 @@
   },
   "homepage": "https://github.com/cadpnq/telnetlib#readme",
   "devDependencies": {
+    "@babel/core": "^7.14.8",
+    "@babel/eslint-parser": "^7.14.9",
+    "@babel/preset-env": "^7.14.9",
     "chai": "^4.3.4",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "husky": "^7.0.1",
+    "lint-staged": "^11.1.1",
     "mocha": "^9.0.0",
-    "nyc": "^15.1.0"
+    "nyc": "^15.1.0",
+    "prettier": "^2.3.2"
   }
 }

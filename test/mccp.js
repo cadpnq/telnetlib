@@ -2,45 +2,51 @@ const telnetlib = require('../index');
 const { where } = telnetlib.constants;
 const { MCCP } = telnetlib.options;
 
-describe('MCCP', function() {
+describe('MCCP', function () {
   let server, serverSocket, serverMCCP, client, clientMCCP;
   let serverLocal = [],
-      serverRemote = [],
-      clientLocal = [],
-      clientRemote = [];
+    serverRemote = [],
+    clientLocal = [],
+    clientRemote = [];
 
-  beforeEach(function(done) {
-    server = telnetlib.createServer({
-      localOptions: serverLocal,
-      remoteOptions: serverRemote
-    }, (c) => {
-      serverSocket = c;
-      serverMCCP = c.getOption(MCCP);
-      c.on('negotiated', () => {
-        done();
-      });
-    });
+  beforeEach(function (done) {
+    server = telnetlib.createServer(
+      {
+        localOptions: serverLocal,
+        remoteOptions: serverRemote
+      },
+      (c) => {
+        serverSocket = c;
+        serverMCCP = c.getOption(MCCP);
+        c.on('negotiated', () => {
+          done();
+        });
+      }
+    );
     server.listen(9001);
 
-    client = telnetlib.createConnection({
-      host: '127.0.0.1',
-      port: 9001,
-      localOptions: clientLocal,
-      remoteOptions: clientRemote
-    }, () => {
-      clientMCCP = client.getOption(MCCP);
-    });
+    client = telnetlib.createConnection(
+      {
+        host: '127.0.0.1',
+        port: 9001,
+        localOptions: clientLocal,
+        remoteOptions: clientRemote
+      },
+      () => {
+        clientMCCP = client.getOption(MCCP);
+      }
+    );
   });
 
-  afterEach(function() {
+  afterEach(function () {
     client.end();
     server.close();
   });
 
   serverLocal = [MCCP];
   clientRemote = [MCCP];
-  describe('server-to-client compression', function() {
-    it('should pass compressed data from the server to the client', function(done) {
+  describe('server-to-client compression', function () {
+    it('should pass compressed data from the server to the client', function (done) {
       const testData = 'foobar\r\n';
       client.once('data', (data) => {
         assert.equal(data, testData, 'test data was not the same');
@@ -49,13 +55,13 @@ describe('MCCP', function() {
       serverSocket.write(testData);
     });
   });
-  
+
   serverLocal = [];
   serverRemote = [MCCP];
   clientLocal = [MCCP];
   clientRemote = [];
-  describe('client-to-server compression', function() {
-    it('should pass compressed data from the client to the server', function(done) {
+  describe('client-to-server compression', function () {
+    it('should pass compressed data from the client to the server', function (done) {
       const testData = 'foobar\r\n';
       serverSocket.once('data', (data) => {
         assert.equal(data, testData, 'test data was not the same');
@@ -69,8 +75,8 @@ describe('MCCP', function() {
   serverRemote = [MCCP];
   clientLocal = [MCCP];
   clientRemote = [MCCP];
-  describe('bidirectional compression', function() {
-    it('should pass compressed data between the server and client', function(done) {
+  describe('bidirectional compression', function () {
+    it('should pass compressed data between the server and client', function (done) {
       const testData = 'foobar\r\n';
       let otherDone = false;
       serverSocket.once('data', (data) => {
@@ -92,16 +98,16 @@ describe('MCCP', function() {
   serverRemote = [];
   clientLocal = [];
   clientRemote = [MCCP];
-  describe('compression downgrading', function() {
-    it('should handle downgrading compression by sending a Z_FINISH', function(done) {
+  describe('compression downgrading', function () {
+    it('should handle downgrading compression by sending a Z_FINISH', function (done) {
       const stage1 = 'stage 1\r\n',
-            stage2 = 'stage 2\r\n',
-            stage3 = 'stage 3\r\n',
-            stage4 = 'stage 4\r\n',
-            stage5 = 'stage 5\r\n';
+        stage2 = 'stage 2\r\n',
+        stage3 = 'stage 3\r\n',
+        stage4 = 'stage 4\r\n',
+        stage5 = 'stage 5\r\n';
       serverSocket.on('data', (data) => {
         data = data.toString();
-        switch(data) {
+        switch (data) {
           case stage2:
             serverMCCP.endCompression(() => {
               serverSocket.write(stage3);
@@ -118,7 +124,7 @@ describe('MCCP', function() {
       });
       client.on('data', (data) => {
         data = data.toString();
-        switch(data) {
+        switch (data) {
           case stage1:
             client.write(stage2);
             break;

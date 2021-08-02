@@ -7,8 +7,7 @@ function createServer(options, handler) {
   return net.createServer(options, (c) => {
     const telnet = new TelnetSocket(c, options);
     handler(telnet);
-    telnet.negotiate()
-    .catch((e) => {
+    telnet.negotiate().catch((e) => {
       console.log(e);
     });
   });
@@ -17,8 +16,7 @@ function createServer(options, handler) {
 function createConnection(options, handler) {
   const connection = net.createConnection(options, handler);
   const telnet = new TelnetSocket(connection, options);
-  telnet.negotiate()
-  .catch((e) => {
+  telnet.negotiate().catch((e) => {
     console.log(e);
   });
   return telnet;

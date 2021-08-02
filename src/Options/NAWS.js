@@ -12,7 +12,7 @@ class NAWS extends TelnetOption {
     this.socket.columns = width;
     this.socket.rows = height;
     this.socket.emit('resize');
-    this.emit('resize', {width, height});
+    this.emit('resize', { width, height });
   }
 
   sendResize(width = 80, height = 24) {

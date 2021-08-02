@@ -1,0 +1,10 @@
+parser: '@babel/eslint-parser'
+parserOptions:
+  ecmaVersion: latest
+plugins:
+  - prettier
+extends:
+  - plugin:prettier/recommended
+rules:
+  'prettier/prettier':
+    - error

@@ -83,7 +83,7 @@ class TelnetSocket extends Stream.Stream {
               o.himq = q.OPPOSITE;
               break;
             case q.OPPOSITE:
-              // error - already queued an enable request
+            // error - already queued an enable request
           }
           break;
         case optionState.WANTYES:
@@ -147,7 +147,7 @@ class TelnetSocket extends Stream.Stream {
               o.himq = q.OPPOSITE;
               break;
             case q.OPPOSITE:
-              // error - already disabling
+            // error - already disabling
           }
       }
 
@@ -221,7 +221,6 @@ class TelnetSocket extends Stream.Stream {
     });
   }
 
-
   // If we decide to disable: using us and usq
   //    NO            Error: Already disabled.
   //    YES           us=WANTNO, send WONT.
@@ -260,7 +259,7 @@ class TelnetSocket extends Stream.Stream {
               // error - already negotiating
               break;
             case Q.OPPOSITE:
-              // error - already disabling
+            // error - already disabling
           }
       }
 
@@ -295,8 +294,7 @@ class TelnetSocket extends Stream.Stream {
       promises.push(this.enableRemote(option));
     }
 
-    return Promise.allSettled(promises)
-    .then(() => this.emit('negotiated'));
+    return Promise.allSettled(promises).then(() => this.emit('negotiated'));
   }
 }
 

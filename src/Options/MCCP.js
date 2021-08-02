@@ -5,12 +5,12 @@ const { optionState, where } = require('../constants');
 
 class MCCP extends TelnetOption {
   deflating = false;
-  inflating = false; 
+  inflating = false;
 
   constructor(socket, code) {
     super(socket, 86);
-    this.deflate = zlib.createDeflate({flush: Z_SYNC_FLUSH});
-    this.inflate = zlib.createInflate({flush: Z_SYNC_FLUSH});
+    this.deflate = zlib.createDeflate({ flush: Z_SYNC_FLUSH });
+    this.inflate = zlib.createInflate({ flush: Z_SYNC_FLUSH });
   }
 
   enabled(at) {
@@ -39,7 +39,9 @@ class MCCP extends TelnetOption {
       });
 
       this.socket.socket.unpipe(this.socket.reader);
-      this.socket.socket.pipe(this.inflate, { end: false }).pipe(this.socket.reader, { end: false });
+      this.socket.socket
+        .pipe(this.inflate, { end: false })
+        .pipe(this.socket.reader, { end: false });
     }
   }
 

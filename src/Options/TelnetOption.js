@@ -8,7 +8,7 @@ class TelnetOption extends EventEmitter {
   himq = q.EMPTY;
   enabledLocal = false;
   enabledRemote = false;
-  
+
   constructor(socket, code) {
     super();
     this.code = code;
@@ -49,14 +49,11 @@ class TelnetOption extends EventEmitter {
     return this.#him;
   }
 
-  enabled(at) {
-  }
+  enabled(at) {}
 
-  disabled(at) {
-  }
-  
-  subnegotiation(buffer) {
-  }
+  disabled(at) {}
+
+  subnegotiation(buffer) {}
 
   // Upon receipt of WILL, we choose based upon him and himq:
   //    NO            If we agree that he should enable, him=YES, send

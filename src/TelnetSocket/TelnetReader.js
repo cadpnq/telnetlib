@@ -26,9 +26,11 @@ class TelnetReader extends Transform {
 
     switch (flushReason) {
       case reason.DATA:
-        if (length >= 2 &&
-            this.#data[length - 1] == 0x0A &&
-            this.#data[length - 2] == 0x0D) {
+        if (
+          length >= 2 &&
+          this.#data[length - 1] == 0x0a &&
+          this.#data[length - 2] == 0x0d
+        ) {
           flush = true;
         }
         break;
@@ -143,7 +145,9 @@ class TelnetReader extends Transform {
             case commands.SE:
               if (this.#subnegotiation.length > 0) {
                 const option = this.socket.getOption(this.#subnegotiation[0]);
-                option.subnegotiation(Buffer.from(this.#subnegotiation.slice(1)));
+                option.subnegotiation(
+                  Buffer.from(this.#subnegotiation.slice(1))
+                );
                 this.#subnegotiation = [];
               }
               this.#state = state.DATA;

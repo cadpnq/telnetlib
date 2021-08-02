@@ -7,13 +7,11 @@ class SGA extends TelnetOption {
   }
 
   enabled(at) {
-    if (at == where.LOCAL)
-      this.socket.reader.flushPolicy.endOfChunk = true;
+    if (at == where.LOCAL) this.socket.reader.flushPolicy.endOfChunk = true;
   }
 
   disabled(at) {
-    if (at == where.LOCAL)
-      this.socket.reader.flushPolicy.endOfChunk = false;
+    if (at == where.LOCAL) this.socket.reader.flushPolicy.endOfChunk = false;
   }
 }
 

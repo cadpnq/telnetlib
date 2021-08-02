@@ -31,73 +31,76 @@ server.listen(9001);
 ```js
 const telnetlib = require('telnetlib');
 
-const client = telnetlib.createConnection({
-  host: '127.0.0.1',
-  port: 9001
-}, () => {
-  client.on('data', (data) => {
-    client.write(data);
-  });
-});
+const client = telnetlib.createConnection(
+  {
+    host: '127.0.0.1',
+    port: 9001
+  },
+  () => {
+    client.on('data', (data) => {
+      client.write(data);
+    });
+  }
+);
 ```
 
 ## Features
 
-* [RFC1143 option negotiation](https://tools.ietf.org/html/rfc1143)
-* Telnet option handlers for:
-  * [SGA](https://tools.ietf.org/html/rfc858)
-  * [NAWS](https://tools.ietf.org/html/rfc1073)
-  * [GMCP](https://www.gammon.com.au/gmcp)
-  * [MCCP2](https://www.gammon.com.au/mccp/protocol.html)
+- [RFC1143 option negotiation](https://tools.ietf.org/html/rfc1143)
+- Telnet option handlers for:
+  - [SGA](https://tools.ietf.org/html/rfc858)
+  - [NAWS](https://tools.ietf.org/html/rfc1073)
+  - [GMCP](https://www.gammon.com.au/gmcp)
+  - [MCCP2](https://www.gammon.com.au/mccp/protocol.html)
 
 ## Reference
 
 ### `telnetlib.createServer(options, handler)`
 
-* `options` *Object*
-  * `remoteOptions` *Array* Option codes we want enabled remotely
-  * `localOptions` *Array* Option codes we want enabled locally
-  * `receiveBuffermax` *integer* How large the receive buffer is
-  * `subnegotiationBufferMax` *integer* How large the subnegotiation buffer is
-* `handler` *Function* listener for the `connection` event.
+- `options` _Object_
+  - `remoteOptions` _Array_ Option codes we want enabled remotely
+  - `localOptions` _Array_ Option codes we want enabled locally
+  - `receiveBuffermax` _integer_ How large the receive buffer is
+  - `subnegotiationBufferMax` _integer_ How large the subnegotiation buffer is
+- `handler` _Function_ listener for the `connection` event.
 
 Creates a new telnet server.
 
 ### `telnetlib.createConnection(options, handler)`
 
-* `options` *Object*
-  * `host` *String* Host the socket should connect to
-  * `port` *Integer* Port the socket should connect to
-  * `remoteOptions` *Array* Option codes we want enabled remotely
-  * `localOptions` *Array* Option codes we want enabled locally
-  * `receiveBuffermax` *integer* How large the receive buffer is
-  * `subnegotiationBufferMax` *integer* How large the subnegotiation buffer is
-* `handler` *Function* listener for the `connect` event.
+- `options` _Object_
+  - `host` _String_ Host the socket should connect to
+  - `port` _Integer_ Port the socket should connect to
+  - `remoteOptions` _Array_ Option codes we want enabled remotely
+  - `localOptions` _Array_ Option codes we want enabled locally
+  - `receiveBuffermax` _integer_ How large the receive buffer is
+  - `subnegotiationBufferMax` _integer_ How large the subnegotiation buffer is
+- `handler` _Function_ listener for the `connect` event.
 
 A factory function which creates a `net.Socket`, wraps it in a `TelnetSocket`, initiates option negotiation, and returns the `TelnetSocket`.
 
 ### `telnetlib.defineOption(name, code[, handler])`
 
-* `name` *String* The name of the telnet option.
-* `code` *Integer* The telnet option code
-* `handler` *TelnetOption* Optional class that manages option
+- `name` _String_ The name of the telnet option.
+- `code` _Integer_ The telnet option code
+- `handler` _TelnetOption_ Optional class that manages option
 
 Register an option handler with the library.
 
 ### Class: `telnetlib.TelnetSocket`
 
-* Extends: *Stream.Stream*
+- Extends: _Stream.Stream_
 
 This class wraps a socket and manages object negotiation.
 
 ### `new telnetlib.TelnetSocket(socket[, options])`
 
-* `socket` *net.Socket* Socket object to wrap
-* `options` *Object*
-  * `remoteOptions` *Array* Option codes we want enabled remotely
-  * `localOptions` *Array* Option codes we want enabled locally
-  * `receiveBuffermax` *integer* How large the receive buffer is
-  * `subnegotiationBufferMax` *integer* How large the subnegotiation buffer is
+- `socket` _net.Socket_ Socket object to wrap
+- `options` _Object_
+  - `remoteOptions` _Array_ Option codes we want enabled remotely
+  - `localOptions` _Array_ Option codes we want enabled locally
+  - `receiveBuffermax` _integer_ How large the receive buffer is
+  - `subnegotiationBufferMax` _integer_ How large the subnegotiation buffer is
 
 #### Event: `negotiated`
 
@@ -105,54 +108,54 @@ Emitted when all option negotiations have been settled either through (dis)agree
 
 #### Event: `enable`
 
-* `optionCode` *integer* telnet option code
-* `at` *String* value indicating where the option was enabled. Either `'LOCAL'` or `'REMOTE'`
+- `optionCode` _integer_ telnet option code
+- `at` _String_ value indicating where the option was enabled. Either `'LOCAL'` or `'REMOTE'`
 
 Emitted when an option is enabled.
 
 #### Event: `disable`
 
-* `optionCode` *integer* telnet option code
-* `at` *String* value indicating where the option was disabled. Either `'LOCAL'` or `'REMOTE'`
+- `optionCode` _integer_ telnet option code
+- `at` _String_ value indicating where the option was disabled. Either `'LOCAL'` or `'REMOTE'`
 
 Emitted when an option is disabled.
 
 #### `TelnetSocket.enableRemote(option[, timeout])`
 
-* `option` - *integer* telnet option code
-* `timeout` - *integer* timeout in milliseconds
-* Returns: *Promise*
+- `option` - _integer_ telnet option code
+- `timeout` - _integer_ timeout in milliseconds
+- Returns: _Promise_
 
 Request that an option be enabled remotely.
 
 #### `TelnetSocket.disableRemote(option[, timeout])`
 
-* `option` - *integer* telnet option code
-* `timeout` - *integer* timeout in milliseconds
-* Returns: *Promise*
+- `option` - _integer_ telnet option code
+- `timeout` - _integer_ timeout in milliseconds
+- Returns: _Promise_
 
 Request that an option be disabled remotely.
 
 #### `TelnetSocket.enableLocal(option[, timeout])`
 
-* `option` - *integer* telnet option code
-* `timeout` - *integer* timeout in milliseconds
-* Returns: *Promise*
+- `option` - _integer_ telnet option code
+- `timeout` - _integer_ timeout in milliseconds
+- Returns: _Promise_
 
 Request that an option be enabled locally.
 
 #### `TelnetSocket.disableLocal(option[, timeout])`
 
-* `option` - *integer* telnet option code
-* `timeout` - *integer* timeout in milliseconds
-* Returns: *Promise*
+- `option` - _integer_ telnet option code
+- `timeout` - _integer_ timeout in milliseconds
+- Returns: _Promise_
 
 Request that an option be disabled locally.
 
 #### `TelnetSocket.getOption(code)`
 
-* `code` - *integer* telnet option code
-* Returns: *TelnetOption*
+- `code` - _integer_ telnet option code
+- Returns: _TelnetOption_
 
 Get the handler for the specified option.
 
@@ -162,80 +165,80 @@ This is the base class for option handlers.
 
 #### `enabled(at)`
 
-* `at` *String* value indicating where option was enabled. Either `'LOCAL'` or `'REMOTE'`
+- `at` _String_ value indicating where option was enabled. Either `'LOCAL'` or `'REMOTE'`
 
 Called whenever the option is enabled. Intended to be overridden by subclasses.
 
 #### `disabled(at)`
 
-* `at` *String* value indicating where option was disabled. Either `'LOCAL'` or `'REMOTE'`
+- `at` _String_ value indicating where option was disabled. Either `'LOCAL'` or `'REMOTE'`
 
 Called whenever the option is disabled. Intended to be overridden by subclasses.
 
 #### `subnegotiation(buffer)`
 
-* `buffer` *Buffer* contents of the subnegotiation
+- `buffer` _Buffer_ contents of the subnegotiation
 
 Called when a subnegotiation is received for an option. Intended to be overridden by subclasses.
 
 ### Class: `GMCP`
 
-* Extends: `telnetlib.TelnetOption`
+- Extends: `telnetlib.TelnetOption`
 
 This class handles sending and receiving GMCP message.
 
 #### Event: `gmcp`
 
-* `packageName` *String* the name of the package the message belongs to
-* `messageName` *String* the name of the message
-* `data` *String* | *Number* | *Boolean* | *Object* | *Array* The message data
+- `packageName` _String_ the name of the package the message belongs to
+- `messageName` _String_ the name of the message
+- `data` _String_ | _Number_ | _Boolean_ | _Object_ | _Array_ The message data
 
 Emitted when a GMCP message is received. `packageName` and `messageName` are normalized to lower case.
 
 #### Event: `gmcp/<name>`
 
-* `data` *String* | *Number* | *Boolean* | *Object* | *Array* The message data
+- `data` _String_ | _Number_ | _Boolean_ | _Object_ | _Array_ The message data
 
 As above, but instead of having `packageName` and `messageName` values they are included in the event name.
 
 #### `send(packageName, messageName[, data])`
 
-* `packageName` *String* the name of the package
-* `messageName` *String* the name of the message
-* `data` *String* | *Number* | *Boolean* | *Object* | *Array* The message data
+- `packageName` _String_ the name of the package
+- `messageName` _String_ the name of the message
+- `data` _String_ | _Number_ | _Boolean_ | _Object_ | _Array_ The message data
 
 Send a GMCP message.
 
 ### Class: `MCCP`
 
-* Extends: `telnetlib.TelnetOption`
+- Extends: `telnetlib.TelnetOption`
 
 This class handles MCCP2 compression.
 
 #### `endCompression([callback])`
 
-* `callback` *Function* optional callback
+- `callback` _Function_ optional callback
 
 Only valid when MCCP is enabled locally. Sends a `Z_FINISH` flush and forces MCCP off locally.
 
 ### Class: `NAWS`
 
-* Extends: `telnetlib.TelnetOption`
+- Extends: `telnetlib.TelnetOption`
 
 This class handles sending and receiving window resize events.
 
 #### Event: `resize`
 
-* `data` *Object*
-* `width` *Integer* The width reported by the client.
-  * `height` *Integer* The height reported by the client.
+- `data` _Object_
+- `width` _Integer_ The width reported by the client.
+  - `height` _Integer_ The height reported by the client.
 
 Event emitted when a resize subnegotiation is received.
 
 #### `sendResize([width[, height]])`
 
-* `width` *Integer* The width to send. **Default:** 80
-* `height` *Integer* The height to send. **Default:** 24
+- `width` _Integer_ The width to send. **Default:** 80
+- `height` _Integer_ The height to send. **Default:** 24
 
 Send a resize subnegotiation.
 
@@ -261,8 +264,7 @@ class Something extends telnetlib.TelnetOption {
     if (at == where.LOCAL) console.log('this option was disabled locally');
   }
 
-  subnegotiation(buffer) {
-  }
+  subnegotiation(buffer) {}
 }
 
 telnetlib.defineOption('Something', ourOptionCode, Something);
@@ -280,18 +282,21 @@ This is similar to the simple example above, but instead of sending normal text 
 const telnetlib = require('telnetlib');
 const { GMCP } = telnetlib.options;
 
-const server = telnetlib.createServer({
-  localOptions: [GMCP]
-}, (c) => {
-  const gmcp = c.getOption(GMCP);
-  c.on('negotiated', () => {
-    gmcp.send('herp', 'derp', 42);
-  });
+const server = telnetlib.createServer(
+  {
+    localOptions: [GMCP]
+  },
+  (c) => {
+    const gmcp = c.getOption(GMCP);
+    c.on('negotiated', () => {
+      gmcp.send('herp', 'derp', 42);
+    });
 
-  gmcp.on('gmcp/herp.derp', (data) => {
-    gmcp.send('herp', 'derp', data);
-  });
-});
+    gmcp.on('gmcp/herp.derp', (data) => {
+      gmcp.send('herp', 'derp', data);
+    });
+  }
+);
 
 server.listen(9001);
 ```
@@ -302,16 +307,19 @@ server.listen(9001);
 const telnetlib = require('telnetlib');
 const { GMCP } = telnetlib.options;
 
-const client = telnetlib.createConnection({
-  host: '127.0.0.1',
-  port: 9001,
-  remoteOptions: [GMCP]
-}, () => {
-  const gmcp = client.getOption(GMCP);
-  gmcp.on('gmcp/herp.derp', (data) => {
-    gmcp.send('herp', 'derp', data);
-  });
-});
+const client = telnetlib.createConnection(
+  {
+    host: '127.0.0.1',
+    port: 9001,
+    remoteOptions: [GMCP]
+  },
+  () => {
+    const gmcp = client.getOption(GMCP);
+    gmcp.on('gmcp/herp.derp', (data) => {
+      gmcp.send('herp', 'derp', data);
+    });
+  }
+);
 ```
 
 ### Fancy Interfaces
@@ -323,10 +331,12 @@ const blessed = require('blessed');
 const telnetlib = require('telnetlib');
 const { ECHO, TRANSMIT_BINARY, NAWS, SGA } = telnetlib.options;
 
-const server = telnetlib.createServer({
+const server = telnetlib.createServer(
+  {
     remoteOptions: [NAWS, TRANSMIT_BINARY, SGA],
     localOptions: [ECHO, TRANSMIT_BINARY, SGA]
-  }, (c) => {
+  },
+  (c) => {
     let screen;
 
     c.on('negotiated', () => {
@@ -342,7 +352,7 @@ const server = telnetlib.createServer({
           artificial: true,
           shape: 'line',
           blink: true,
-          color: null 
+          color: null
         }
       });
 
@@ -362,7 +372,8 @@ const server = telnetlib.createServer({
     c.on('end', () => {
       if (screen) screen.destroy();
     });
-});
+  }
+);
 
 server.listen(9001);
 ```
