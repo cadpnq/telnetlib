@@ -44,6 +44,7 @@ class TelnetSocket extends Stream.Stream {
     expose(this.reader, 'resume', this);
     expose(this.reader, 'pause', this);
 
+    reemit(this.socket, 'error', this);
     reemit(this.writer, 'drain', this);
     reemit(this.writer, 'error', this);
     reemit(this.reader, 'data', this);
