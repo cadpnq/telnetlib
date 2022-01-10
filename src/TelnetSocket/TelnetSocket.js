@@ -1,5 +1,6 @@
 const Stream = require('stream');
 const { optionState, q, where } = require('../constants');
+const constants = require('../constants');
 const TelnetReader = require('./TelnetReader');
 const TelnetWriter = require('./TelnetWriter');
 const options = require('../options');
@@ -37,6 +38,13 @@ class TelnetSocket extends Stream.Stream {
     this.writer.pipe(this.socket);
 
     expose(this.socket, 'setEncoding', this);
+
+    if (
+      this.remoteOptions.has(constants.options.MCCP) &&
+      this.localOptions.has(constants.options.MCCP)
+    ) {
+      reemit(this.socket, 'end', this);
+    }
 
     expose(this.writer, 'write', this);
     expose(this.writer, 'end', this);
