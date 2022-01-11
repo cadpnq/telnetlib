@@ -14,7 +14,7 @@ class GMCP extends TelnetOption {
       let [, packageName, messageName] = name.match(/(.*)\.(.*)/);
 
       if (data) {
-        data = JSON.parse(data);
+        data = JSON.parse(data.replace(/\x1b/g, '\\u001b'));
       }
       this.emit(`gmcp/${name}`, data);
       this.emit('gmcp', packageName, messageName, data);
