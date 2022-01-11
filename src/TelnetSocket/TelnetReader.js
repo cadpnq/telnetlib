@@ -69,96 +69,99 @@ class TelnetReader extends Transform {
   }
 
   _transform(chunk, encoding, callback) {
-    for (const byte of chunk) {
-      switch (this.#state) {
-        case state.DATA:
-          if (byte == commands.IAC) {
-            this.#state = state.IAC;
-          } else {
-            if (this._pushData(byte)) return;
-            this._maybeFlush(reason.DATA);
-          }
-          break;
-        case state.IAC:
-          switch (byte) {
-            case commands.WILL:
-              this.#state = state.WILL;
-              break;
-            case commands.WONT:
-              this.#state = state.WONT;
-              break;
-            case commands.DO:
-              this.#state = state.DO;
-              break;
-            case commands.DONT:
-              this.#state = state.DONT;
-              break;
-            case commands.SB:
-              this.#state = state.SB;
-              break;
-            case commands.IAC:
-              this.#state = state.DATA;
+    try {
+      for (const byte of chunk) {
+        switch (this.#state) {
+          case state.DATA:
+            if (byte == commands.IAC) {
+              this.#state = state.IAC;
+            } else {
               if (this._pushData(byte)) return;
               this._maybeFlush(reason.DATA);
-              break;
-            case commands.GA:
-              this.#state = state.DATA;
-              this._maybeFlush(reason.GA);
-              break;
-            case commands.EOR:
-              this.#state = state.DATA;
-              this._maybeFlush(reason.EOR);
-              break;
-            default:
-              this.#state = state.DATA;
-          }
-          break;
-        case state.WILL:
-          this.#state = state.DATA;
-          this.socket.getOption(byte).handleWill();
-          break;
-        case state.WONT:
-          this.#state = state.DATA;
-          this.socket.getOption(byte).handleWont();
-          break;
-        case state.DO:
-          this.#state = state.DATA;
-          this.socket.getOption(byte).handleDo();
-          break;
-        case state.DONT:
-          this.#state = state.DATA;
-          this.socket.getOption(byte).handleDont();
-          break;
-        case state.SB:
-          if (byte == commands.IAC) {
-            this.#state = state.SBIAC;
-          } else {
-            if (this._pushSubnegotiationData(byte)) return;
-          }
-          break;
-        case state.SBIAC:
-          switch (byte) {
-            case commands.IAC:
-              this.#state = state.SB;
-              if (this._pushSubnegotiationData(commands.IAC)) return;
-              break;
-            case commands.SE:
-              if (this.#subnegotiation.length > 0) {
-                const option = this.socket.getOption(this.#subnegotiation[0]);
-                option.subnegotiation(
-                  Buffer.from(this.#subnegotiation.slice(1))
-                );
-                this.#subnegotiation = [];
-              }
-              this.#state = state.DATA;
-          }
+            }
+            break;
+          case state.IAC:
+            switch (byte) {
+              case commands.WILL:
+                this.#state = state.WILL;
+                break;
+              case commands.WONT:
+                this.#state = state.WONT;
+                break;
+              case commands.DO:
+                this.#state = state.DO;
+                break;
+              case commands.DONT:
+                this.#state = state.DONT;
+                break;
+              case commands.SB:
+                this.#state = state.SB;
+                break;
+              case commands.IAC:
+                this.#state = state.DATA;
+                if (this._pushData(byte)) return;
+                this._maybeFlush(reason.DATA);
+                break;
+              case commands.GA:
+                this.#state = state.DATA;
+                this._maybeFlush(reason.GA);
+                break;
+              case commands.EOR:
+                this.#state = state.DATA;
+                this._maybeFlush(reason.EOR);
+                break;
+              default:
+                this.#state = state.DATA;
+            }
+            break;
+          case state.WILL:
+            this.#state = state.DATA;
+            this.socket.getOption(byte).handleWill();
+            break;
+          case state.WONT:
+            this.#state = state.DATA;
+            this.socket.getOption(byte).handleWont();
+            break;
+          case state.DO:
+            this.#state = state.DATA;
+            this.socket.getOption(byte).handleDo();
+            break;
+          case state.DONT:
+            this.#state = state.DATA;
+            this.socket.getOption(byte).handleDont();
+            break;
+          case state.SB:
+            if (byte == commands.IAC) {
+              this.#state = state.SBIAC;
+            } else {
+              if (this._pushSubnegotiationData(byte)) return;
+            }
+            break;
+          case state.SBIAC:
+            switch (byte) {
+              case commands.IAC:
+                this.#state = state.SB;
+                if (this._pushSubnegotiationData(commands.IAC)) return;
+                break;
+              case commands.SE:
+                if (this.#subnegotiation.length > 0) {
+                  const option = this.socket.getOption(this.#subnegotiation[0]);
+                  option.subnegotiation(
+                    Buffer.from(this.#subnegotiation.slice(1))
+                  );
+                  this.#subnegotiation = [];
+                }
+                this.#state = state.DATA;
+            }
+        }
       }
-    }
 
-    if (this.#data.length > 0) {
-      this._maybeFlush(reason.CHUNK);
+      if (this.#data.length > 0) {
+        this._maybeFlush(reason.CHUNK);
+      }
+    } catch (err) {
+      this.emit('error', err);
     }
-
     callback();
   }
 }
