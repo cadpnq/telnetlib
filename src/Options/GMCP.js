@@ -6,17 +6,21 @@ class GMCP extends TelnetOption {
   }
 
   subnegotiation(buffer) {
-    let [, name, data] = buffer
-      .toString()
-      .match(/([a-z_][\w-_]*(?:\.[a-z_][\w-_]*)+)\s*(.*)?/i);
-    name = name.toLowerCase();
-    let [, packageName, messageName] = name.match(/(.*)\.(.*)/);
+    try {
+      let [, name, data] = buffer
+        .toString()
+        .match(/([a-z_][\w-_]*(?:\.[a-z_][\w-_]*)+)\s*(.*)?/i);
+      name = name.toLowerCase();
+      let [, packageName, messageName] = name.match(/(.*)\.(.*)/);
 
-    if (data) {
-      data = JSON.parse(data);
+      if (data) {
+        data = JSON.parse(data.replace(/\x1b/g, '\\u001b'));
+      }
+      this.emit(`gmcp/${name}`, data);
+      this.emit('gmcp', packageName, messageName, data);
+    } catch (err) {
+      this.emit('error', err);
     }
-    this.emit(`gmcp/${name}`, data);
-    this.emit('gmcp', packageName, messageName, data);
   }
 
   send(packageName, messageName, data) {
