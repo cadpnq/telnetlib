@@ -1,6 +1,6 @@
 {
   "name": "telnetlib",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A simple Node.js telnet server/client library.",
   "main": "src/telnetlib.js",
   "scripts": {
