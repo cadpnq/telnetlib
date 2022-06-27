@@ -236,30 +236,30 @@ class TelnetSocket extends Stream.Stream {
       this.localOptions.delete(option);
       let o = this.getOption(option);
       switch (o.us) {
-        case OptionState.NO:
+        case optionState.NO:
           // error - already disabled
           resolve();
           return;
-        case OptionState.YES:
-          o.us = OptionState.WANTNO;
+        case optionState.YES:
+          o.us = optionState.WANTNO;
           this.writer.writeWont(option);
           break;
-        case OptionState.WANTNO:
+        case optionState.WANTNO:
           switch (o.usq) {
-            case Q.EMPTY:
+            case q.EMPTY:
               // error - already negotiating disable
               break;
-            case Q.OPPOSITE:
-              o.usq = Q.EMPTY;
+            case q.OPPOSITE:
+              o.usq = q.EMPTY;
           }
           break;
-        case OptionState.WANTYES:
+        case optionState.WANTYES:
           switch (o.usq) {
-            case Q.EMPTY:
-              o.usq = Q.OPPOSITE;
+            case q.EMPTY:
+              o.usq = q.OPPOSITE;
               // error - already negotiating
               break;
-            case Q.OPPOSITE:
+            case q.OPPOSITE:
             // error - already disabling
           }
       }
