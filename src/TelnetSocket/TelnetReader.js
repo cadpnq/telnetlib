@@ -1,6 +1,8 @@
 const { Transform } = require('stream');
 const { state, commands, reason } = require('../constants');
 
+const OneMiB = 1024 * 1024;
+
 class TelnetReader extends Transform {
   #state = state.DATA;
   #data = [];
@@ -15,8 +17,8 @@ class TelnetReader extends Transform {
     super();
     this.socket = socket;
 
-    this.receiveBufferMax = options.receiveBufferMax || 4096;
-    this.subnegotiationBufferMax = options.subnegotiationBufferMax || 4096;
+    this.receiveBufferMax = options.receiveBufferMax || OneMiB;
+    this.subnegotiationBufferMax = options.subnegotiationBufferMax || OneMiB;
   }
 
   _maybeFlush(flushReason) {
