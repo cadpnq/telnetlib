@@ -1,8 +1,0 @@
-reporter:
-  - html
-  - lcov
-  - text
-report-dir: coverage
-all: true
-include:
-  - src/**/*.js

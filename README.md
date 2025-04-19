@@ -2,7 +2,7 @@
 
 A simple Node.js telnet server/client library. It provides an interface similar to the standard net module (viz. `createServer` and `createConnection`) while abstracting option negotiation and providing handlers for some common options.
 
-![Codacy grade](https://img.shields.io/codacy/grade/478d585bd8514d4786c315699b575512?style=plastic) ![Codacy coverage](https://img.shields.io/codacy/coverage/478d585bd8514d4786c315699b575512?style=plastic) ![npm](https://img.shields.io/npm/v/telnetlib?style=plastic) ![GitHub](https://img.shields.io/github/license/cadpnq/telnetlib?style=plastic)
+![npm](https://img.shields.io/npm/v/telnetlib?style=plastic) ![GitHub](https://img.shields.io/github/license/cadpnq/telnetlib?style=plastic)
 
 ## Simple Example
 
