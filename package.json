@@ -3,6 +3,7 @@
   "version": "2.0.0",
   "description": "A simple Node.js telnet server/client library.",
   "main": "dist/telnetlib.js",
+  "types": "dist/telnetlib.d.ts",
   "scripts": {
     "build:dev": "tsc --watch",
     "build": "tsc",
