@@ -6,10 +6,12 @@
   "scripts": {
     "build:dev": "tsc --watch",
     "build": "tsc",
+    "prepare": "npm run build",
     "test": "jest"
   },
   "files": [
-    "dist/"
+    "dist/",
+    "src/"
   ],
   "repository": {
     "type": "git",
