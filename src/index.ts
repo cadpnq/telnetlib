@@ -7,6 +7,9 @@ import {
 import { Socket } from "./Socket";
 import { OptionName } from "./Options";
 
+export * from "./Socket";
+export * from "./Options";
+
 export interface TelnetConnectionOptions {
   localOptions: OptionName[];
   remoteOptions: OptionName[];
